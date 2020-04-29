@@ -1,3 +1,18 @@
+spring_profiles: postgresql,default
+database:
+  driverClassName: org.postgresql.Driver
+  url: jdbc:postgresql://uaa-db:5432/uaa
+  username: uaaadmin
+  password: password
+  maxactive: 100
+  maxidle: 10
+  minidle: 3
+  removeabandoned: false
+  logabandoned: true
+  abandonedtimeout: 300
+  evictionintervalms: 15000
+  caseinsensitive: false
+
 issuer:
   uri: http://uaa:8090/uaa
 
@@ -25,6 +40,12 @@ oauth:
       scope: openid,profile,email,resource.read
       authorities: uaa.resource
       redirect-uri: http://localhost:8080/login/oauth2/code/gateway
+    admin:
+      name: admin
+      secret: adminsecret
+      authorized-grant-types: client_credentials
+      scope: none
+      authorities: uaa.admin,clients.admin,clients.read,clients.write,clients.secret
 
 scim:
   groups:

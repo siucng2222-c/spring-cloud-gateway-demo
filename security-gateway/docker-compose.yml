@@ -7,6 +7,8 @@ services:
       - "8090"
     ports:
       - "8090:8090"
+    depends_on:
+      - uaa-db
   secured-service:
     image: scg-demo-secured-service:latest
     container_name: resource
@@ -22,3 +24,17 @@ services:
     depends_on:
       - secured-service
       - uaa
+  uaa-db:
+    image: postgres
+    ports:
+      - "65432:5432"
+    environment:
+      - POSTGRES_DB=uaa
+      - POSTGRES_USER=uaaadmin
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./uaa-db/data:/var/lib/postgresql/data
+networks:
+  default:
+    external:
+      name: demo-network      
